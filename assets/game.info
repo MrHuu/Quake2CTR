@@ -93,5 +93,65 @@ else ifneq ($(GAME),)
 							game_ctf/g_utils.o \
 							game_ctf/g_weapon.o
 
+	else ifeq ($(GAME), CTC)
+		APP_TITLE       :=	Quake 2: Catch the Chicken
+		APP_UNIQUE_ID   :=	0xFF145
+		GAME_FOLDERS	:=	build/game_ctc build/game_ctc/chicken build/game_ctc/q2cam build/game_ctc/StdLog
+		GAME_FILES		 =	game_ctc/m_tank.o \
+							game_ctc/p_client.o \
+							game_ctc/p_hud.o \
+							game_ctc/p_trail.o \
+							game_ctc/p_view.o \
+							game_ctc/p_weapon.o \
+							game_ctc/q_shared.o \
+							game_ctc/g_ai.o \
+							game_ctc/g_cmds.o \
+							game_ctc/g_combat.o \
+							game_ctc/g_func.o \
+							game_ctc/g_items.o \
+							game_ctc/g_main.o \
+							game_ctc/g_misc.o \
+							game_ctc/g_monster.o \
+							game_ctc/g_phys.o \
+							game_ctc/g_save.o \
+							game_ctc/g_spawn.o \
+							game_ctc/g_svcmds.o \
+							game_ctc/g_target.o \
+							game_ctc/g_trigger.o \
+							game_ctc/g_turret.o \
+							game_ctc/g_utils.o \
+							game_ctc/g_weapon.o \
+							game_ctc/m_actor.o \
+							game_ctc/m_berserk.o \
+							game_ctc/m_boss2.o \
+							game_ctc/m_boss3.o \
+							game_ctc/m_boss31.o \
+							game_ctc/m_boss32.o \
+							game_ctc/m_brain.o \
+							game_ctc/m_chick.o \
+							game_ctc/m_flipper.o \
+							game_ctc/m_float.o \
+							game_ctc/m_flyer.o \
+							game_ctc/m_gladiator.o \
+							game_ctc/m_gunner.o \
+							game_ctc/m_hover.o \
+							game_ctc/m_infantry.o \
+							game_ctc/m_insane.o \
+							game_ctc/m_medic.o \
+							game_ctc/m_move.o \
+							game_ctc/m_mutant.o \
+							game_ctc/m_parasite.o \
+							game_ctc/m_soldier.o \
+							game_ctc/m_flash.o \
+							game_ctc/m_supertank.o \
+							game_ctc/chicken/tctc.o \
+							game_ctc/q2cam/camclient.o \
+							game_ctc/StdLog/gslog.o \
+							game_ctc/StdLog/stdlog.o \
+							game_ctc/chicken/menu.o \
+							game_ctc/chicken/ctc.o
+
+							# game_ctc/chicken/trace.o \
+
 	endif
 endif
