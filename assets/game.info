@@ -222,5 +222,62 @@ else ifneq ($(GAME),)
 
 							# game_rogue/m_move2.o \
 
+	else ifeq ($(GAME), XATRIX)
+		APP_TITLE       :=	Quake 2: The Reckoning
+		APP_UNIQUE_ID   :=	0xFF165
+		GAME_FOLDERS	:=	build/game_xatrix
+		GAME_FILES		 =	game_xatrix/p_client.o \
+							game_xatrix/p_hud.o \
+							game_xatrix/p_trail.o \
+							game_xatrix/p_view.o \
+							game_xatrix/p_weapon.o \
+							game_xatrix/q_shared.o \
+							game_xatrix/g_ai.o \
+							game_xatrix/g_chase.o \
+							game_xatrix/g_cmds.o \
+							game_xatrix/g_combat.o \
+							game_xatrix/g_func.o \
+							game_xatrix/g_items.o \
+							game_xatrix/g_main.o \
+							game_xatrix/g_misc.o \
+							game_xatrix/g_monster.o \
+							game_xatrix/g_phys.o \
+							game_xatrix/g_save.o \
+							game_xatrix/g_spawn.o \
+							game_xatrix/g_svcmds.o \
+							game_xatrix/g_target.o \
+							game_xatrix/g_trigger.o \
+							game_xatrix/g_turret.o \
+							game_xatrix/g_utils.o \
+							game_xatrix/g_weapon.o \
+							game_xatrix/m_actor.o \
+							game_xatrix/m_berserk.o \
+							game_xatrix/m_boss2.o \
+							game_xatrix/m_boss3.o \
+							game_xatrix/m_boss31.o \
+							game_xatrix/m_boss32.o \
+							game_xatrix/m_boss5.o \
+							game_xatrix/m_brain.o \
+							game_xatrix/m_chick.o \
+							game_xatrix/m_fixbot.o \
+							game_xatrix/m_flash.o \
+							game_xatrix/m_flipper.o \
+							game_xatrix/m_float.o \
+							game_xatrix/m_flyer.o \
+							game_xatrix/m_gekk.o \
+							game_xatrix/m_gladb.o \
+							game_xatrix/m_gladiator.o \
+							game_xatrix/m_gunner.o \
+							game_xatrix/m_hover.o \
+							game_xatrix/m_infantry.o \
+							game_xatrix/m_insane.o \
+							game_xatrix/m_medic.o \
+							game_xatrix/m_move.o \
+							game_xatrix/m_mutant.o \
+							game_xatrix/m_parasite.o \
+							game_xatrix/m_soldier.o \
+							game_xatrix/m_supertank.o \
+							game_xatrix/m_tank.o
+
 	endif
 endif
