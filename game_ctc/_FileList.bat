@@ -1,1 +1,0 @@
-dir "%cd%" /b /o [n] >"%cd%\FileList.txt"

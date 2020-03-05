@@ -153,5 +153,74 @@ else ifneq ($(GAME),)
 
 							# game_ctc/chicken/trace.o \
 
+	else ifeq ($(GAME), ROGUE)
+		APP_TITLE       := Quake 2: Ground Zero
+		APP_UNIQUE_ID   := 0xFF155
+		GAME_FOLDERS	:=	build/game_rogue
+		GAME_FILES		 =	game_rogue/p_client.o \
+							game_rogue/p_hud.o \
+							game_rogue/p_trail.o \
+							game_rogue/p_view.o \
+							game_rogue/p_weapon.o \
+							game_rogue/q_shared.o \
+							game_rogue/dm_ball.o \
+							game_rogue/dm_tag.o \
+							game_rogue/g_ai.o \
+							game_rogue/g_chase.o \
+							game_rogue/g_cmds.o \
+							game_rogue/g_combat.o \
+							game_rogue/g_func.o \
+							game_rogue/g_items.o \
+							game_rogue/g_main.o \
+							game_rogue/g_misc.o \
+							game_rogue/g_monster.o \
+							game_rogue/g_newai.o \
+							game_rogue/g_newdm.o \
+							game_rogue/g_newfnc.o \
+							game_rogue/g_newtarg.o \
+							game_rogue/g_newtrig.o \
+							game_rogue/g_newweap.o \
+							game_rogue/g_phys.o \
+							game_rogue/g_save.o \
+							game_rogue/g_spawn.o \
+							game_rogue/g_sphere.o \
+							game_rogue/g_svcmds.o \
+							game_rogue/g_target.o \
+							game_rogue/g_trigger.o \
+							game_rogue/g_turret.o \
+							game_rogue/g_utils.o \
+							game_rogue/g_weapon.o \
+							game_rogue/m_actor.o \
+							game_rogue/m_berserk.o \
+							game_rogue/m_boss2.o \
+							game_rogue/m_boss3.o \
+							game_rogue/m_boss31.o \
+							game_rogue/m_boss32.o \
+							game_rogue/m_brain.o \
+							game_rogue/m_carrier.o \
+							game_rogue/m_chick.o \
+							game_rogue/m_flash.o \
+							game_rogue/m_flipper.o \
+							game_rogue/m_float.o \
+							game_rogue/m_flyer.o \
+							game_rogue/m_gladiator.o \
+							game_rogue/m_gunner.o \
+							game_rogue/m_hover.o \
+							game_rogue/m_infantry.o \
+							game_rogue/m_insane.o \
+							game_rogue/m_medic.o \
+							game_rogue/m_move.o \
+							game_rogue/m_mutant.o \
+							game_rogue/m_parasite.o \
+							game_rogue/m_soldier.o \
+							game_rogue/m_stalker.o \
+							game_rogue/m_supertank.o \
+							game_rogue/m_tank.o \
+							game_rogue/m_turret.o \
+							game_rogue/m_widow.o \
+							game_rogue/m_widow2.o
+
+							# game_rogue/m_move2.o \
+
 	endif
 endif
