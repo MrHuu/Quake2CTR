@@ -628,8 +628,6 @@ void FS_SetGamedir (char *dir)
 	else
 	{
 		Cvar_FullSet ("gamedir", dir, CVAR_SERVERINFO|CVAR_NOSET);
-		if (fs_cddir->string[0])
-			FS_AddGameDirectory (va("%s/%s", fs_cddir->string, dir) );
 		FS_AddGameDirectory (va("%s/%s", fs_basedir->string, dir) );
 	}
 }
@@ -851,19 +849,25 @@ void FS_InitFilesystem (void)
 	fs_basedir = Cvar_Get ("basedir", ".", CVAR_NOSET);
 
 	#ifdef _3DS
-	FS_AddGameDirectory ("romfs:/"BASEDIRNAME );
+//	FS_AddGameDirectory ("romfs:/"BASEDIRNAME );
+	FS_AddGameDirectory ("sdmc:/3ds/quake2/baseq2" );
 	#endif
 	
 	//
 	// start up with baseq2 by default
 	//
-	FS_AddGameDirectory (va("%s/"BASEDIRNAME, fs_basedir->string) );
+	//FS_AddGameDirectory (va("%s/"BASEDIRNAME, fs_basedir->string) );
 
 	// any set gamedirs will be freed up to here
 	fs_base_searchpaths = fs_searchpaths;
 
 	// check for game override
-	fs_gamedirvar = Cvar_Get ("game", "", CVAR_LATCH|CVAR_SERVERINFO);
+	#ifdef _MOD
+		fs_gamedirvar = Cvar_Get ("game", GAME_ID, CVAR_LATCH|CVAR_SERVERINFO);
+	#else
+		fs_gamedirvar = Cvar_Get ("game", "", CVAR_LATCH|CVAR_SERVERINFO);
+	#endif
+
 	if (fs_gamedirvar->string[0])
 		FS_SetGamedir (fs_gamedirvar->string);
 }

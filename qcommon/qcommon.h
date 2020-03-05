@@ -27,6 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	BASEDIRNAME	"baseq2"
 
+#ifdef _MOD
+#define GAME_ID GAMEID
+#endif
+
 #ifdef WIN32
 
 #ifdef NDEBUG

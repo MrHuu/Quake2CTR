@@ -376,6 +376,13 @@ int main (int argc, char **argv)
 {
 	int	time, oldtime, newtime;
 
+#ifdef _MOD
+	char* n_argv[] = {"Quake2"GAME_ID,"+set","game",GAME_ID,NULL};
+
+	argv = n_argv;
+	argc = 4;
+#endif
+
 	romfsInit();
 
 	APT_SetAppCpuTimeLimit(30);

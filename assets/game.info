@@ -1,0 +1,97 @@
+ifeq ($(GAME),CTR)
+
+	TARGET			:=	Quake2CTR
+	APP_TITLE       :=	Quake2CTR
+	APP_DESCRIPTION :=	Port of Quake 2
+	APP_UNIQUE_ID   :=	0xFF125
+	APP_PRODUCT_CODE =	CTR-P-QUAKE2
+	GAME_FOLDERS	:=	build/game
+	GAME_FILES		 =	game/m_tank.o \
+						game/p_client.o \
+						game/p_hud.o \
+						game/p_trail.o \
+						game/p_view.o \
+						game/p_weapon.o \
+						game/q_shared.o \
+						game/g_ai.o \
+						game/g_chase.o \
+						game/g_cmds.o \
+						game/g_combat.o \
+						game/g_func.o \
+						game/g_items.o \
+						game/g_main.o \
+						game/g_misc.o \
+						game/g_monster.o \
+						game/g_phys.o \
+						game/g_save.o \
+						game/g_spawn.o \
+						game/g_svcmds.o \
+						game/g_target.o \
+						game/g_trigger.o \
+						game/g_turret.o \
+						game/g_utils.o \
+						game/g_weapon.o \
+						game/m_actor.o \
+						game/m_berserk.o \
+						game/m_boss2.o \
+						game/m_boss3.o \
+						game/m_boss31.o \
+						game/m_boss32.o \
+						game/m_brain.o \
+						game/m_chick.o \
+						game/m_flash.o \
+						game/m_flipper.o \
+						game/m_float.o \
+						game/m_flyer.o \
+						game/m_gladiator.o \
+						game/m_gunner.o \
+						game/m_hover.o \
+						game/m_infantry.o \
+						game/m_insane.o \
+						game/m_medic.o \
+						game/m_move.o \
+						game/m_mutant.o \
+						game/m_parasite.o \
+						game/m_soldier.o \
+						game/m_supertank.o
+
+else ifneq ($(GAME),)
+	TARGET			:=	Quake2$(GAME)
+	APP_DESCRIPTION :=	$(TARGET)
+	APP_PRODUCT_CODE =	CTR-P-Q2$(GAME)
+	MOD_FLAGS		:=	-D_MOD -DGAMEID=\"$(GAME)\"
+
+	ifeq ($(GAME), CTF)
+		APP_TITLE       :=	Quake 2: Capture the Flag
+		APP_UNIQUE_ID   :=	0xFF135
+		GAME_FOLDERS	:=	build/game build/game_ctf
+		GAME_FILES		 =	game_ctf/m_move.o \
+							game/m_flash.o \
+							game_ctf/p_client.o \
+							game_ctf/p_hud.o \
+							game_ctf/p_menu.o \
+							game_ctf/p_trail.o \
+							game_ctf/p_view.o \
+							game_ctf/p_weapon.o \
+							game_ctf/q_shared.o \
+							game_ctf/g_ai.o \
+							game_ctf/g_chase.o \
+							game_ctf/g_cmds.o \
+							game_ctf/g_combat.o \
+							game_ctf/g_ctf.o \
+							game_ctf/g_func.o \
+							game_ctf/g_items.o \
+							game_ctf/g_main.o \
+							game_ctf/g_misc.o \
+							game_ctf/g_monster.o \
+							game_ctf/g_phys.o \
+							game_ctf/g_save.o \
+							game_ctf/g_spawn.o \
+							game_ctf/g_svcmds.o \
+							game_ctf/g_target.o \
+							game_ctf/g_trigger.o \
+							game_ctf/g_utils.o \
+							game_ctf/g_weapon.o
+
+	endif
+endif

@@ -9,31 +9,47 @@ endif
 TOPDIR ?= $(CURDIR)
 include $(DEVKITARM)/3ds_rules
 
+TOOLDIR := $(DEVKITPRO)/tools/bin
+
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output
 # BUILD is the directory where object files & intermediate files will be placed
 # SOURCES is a list of directories containing source code
 # DATA is a list of directories containing data files
 # INCLUDES is a list of directories containing header files
-#
-# NO_SMDH: if set to anything, no SMDH file is generated.
-# APP_TITLE is the name of the app stored in the SMDH file (Optional)
-# APP_DESCRIPTION is the description of the app stored in the SMDH file (Optional)
-# APP_AUTHOR is the author of the app stored in the SMDH file (Optional)
-# ICON is the filename of the icon (.png), relative to the project folder.
-#   If not set, it attempts to use one of the following (in this order):
-#     - <Project name>.png
-#     - icon.png
-#     - <libctru folder>/default_icon.png
 #---------------------------------------------------------------------------------
-TARGET		:=	Quake2CTR
-BUILD		:=	build
-SOURCES		:=	.
-APP_AUTHOR := MasterFeizz
-APP_TITLE := Quake2CTR
-APP_DESCRIPTION := Port of Quake 2
-DATA		:=	ctr/assets/
-INCLUDES	:=	.
+
+TARGET			:=	Quake2CTR
+BUILD			:=	build
+SOURCES			:=	.
+APP_AUTHOR		:=	MasterFeizz
+DATA			:=	ctr/assets/
+INCLUDES		:=	.
+RESOURCES		:=	assets
+
+GAME			=	$(MAKECMDGOALS)
+ifeq ($(GAME),)
+	GAME		=	CTR
+else
+	GAME		=	`echo $@ | tr a-z A-Z`
+endif
+
+#---------------------------------------------------------------------------------
+# Resource Setup
+#---------------------------------------------------------------------------------
+include $(TOPDIR)/$(RESOURCES)/game.info
+
+ifeq ($(GAME),)
+	BANNER_AUDIO	:= $(RESOURCES)/ctr_audio
+	BANNER_IMAGE	:= $(RESOURCES)/ctr_banner
+	ICON			:= $(RESOURCES)/ctr_icon.png
+else
+	BANNER_AUDIO	:= $(RESOURCES)/ctr_audio
+	BANNER_IMAGE	:= $(RESOURCES)/$(GAME)_banner
+	ICON			:= $(RESOURCES)/$(GAME)_icon.png
+endif
+
+RSF					:= $(TOPDIR)/$(RESOURCES)/template.rsf
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -143,57 +159,8 @@ REFSOFT = 	ref_soft/r_alias.o \
 			ref_soft/r_edge.o \
 			ref_soft/r_image.o
 
-GAME = 		game/m_tank.o \
-			game/p_client.o \
-			game/p_hud.o \
-			game/p_trail.o \
-			game/p_view.o \
-			game/p_weapon.o \
-			game/q_shared.o \
-			game/g_ai.o \
-			game/g_chase.o \
-			game/g_cmds.o \
-			game/g_combat.o \
-			game/g_func.o \
-			game/g_items.o \
-			game/g_main.o \
-			game/g_misc.o \
-			game/g_monster.o \
-			game/g_phys.o \
-			game/g_save.o \
-			game/g_spawn.o \
-			game/g_svcmds.o \
-			game/g_target.o \
-			game/g_trigger.o \
-			game/g_turret.o \
-			game/g_utils.o \
-			game/g_weapon.o \
-			game/m_actor.o \
-			game/m_berserk.o \
-			game/m_boss2.o \
-			game/m_boss3.o \
-			game/m_boss31.o \
-			game/m_boss32.o \
-			game/m_brain.o \
-			game/m_chick.o \
-			game/m_flash.o \
-			game/m_flipper.o \
-			game/m_float.o \
-			game/m_flyer.o \
-			game/m_gladiator.o \
-			game/m_gunner.o \
-			game/m_hover.o \
-			game/m_infantry.o \
-			game/m_insane.o \
-			game/m_medic.o \
-			game/m_move.o \
-			game/m_mutant.o \
-			game/m_parasite.o \
-			game/m_soldier.o \
-			game/m_supertank.o
 
-
-CFILES		:=	$(CLIENT) $(QCOMMON) $(SERVER) $(GAME) $(REFSOFT) $(SYSTEM)
+CFILES		:=	$(CLIENT) $(QCOMMON) $(SERVER) $(GAME_FILES) $(REFSOFT) $(SYSTEM)
 CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
 SFILES		:=
 BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
@@ -221,40 +188,31 @@ export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 
 export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 
-ifeq ($(strip $(ICON)),)
-	icons := $(wildcard *.png)
-	ifneq (,$(findstring $(TARGET).png,$(icons)))
-		export APP_ICON := $(TOPDIR)/$(TARGET).png
-	else
-		ifneq (,$(findstring icon.png,$(icons)))
-			export APP_ICON := $(TOPDIR)/icon.png
-		endif
-	endif
-else
-	export APP_ICON := $(TOPDIR)/$(ICON)
-endif
-
-ifeq ($(strip $(NO_SMDH)),)
-	export _3DSXFLAGS += --smdh=$(CURDIR)/$(TARGET).smdh
-endif
-
-ifneq ($(ROMFS),)
-	export _3DSXFLAGS += --romfs=$(CURDIR)/$(ROMFS)
-endif
-
-.PHONY: $(BUILD) clean all
-
 #---------------------------------------------------------------------------------
-all: $(BUILD)
+# Inclusion of romfs folder and building SMDH
+#---------------------------------------------------------------------------------
+ifneq ($(ROMFS),)
+	export _3DSXFLAGS += --romfs=$(TOPDIR)/$(ROMFS)
+endif
 
-$(BUILD):
-	mkdir -p build/client build/qcommon build/server build/ref_soft build/game build/ctr
-	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+#export _3DSXFLAGS += --smdh=$(OUTPUT).smdh
+
+.PHONY: $(GAME) clean all
+#---------------------------------------------------------------------------------
+
+%:
+	@$(MAKE) --no-print-directory -f $(CURDIR)/Makefile GAME=$(GAME)
+
+$(GAME):
+	@$(MAKE) clean
+	@mkdir -p build/client build/qcommon build/server build/ref_soft build/ctr $(GAME_FOLDERS)
+	@echo "building2 $(TARGET)... $@ - $(GAME_FOLDERS)"
+	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile GAME=$(GAME)
 
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf
+	@rm -fr $(BUILD) *.3dsx *.smdh *.elf *.cia
 
 
 #---------------------------------------------------------------------------------
@@ -262,15 +220,75 @@ else
 
 DEPENDS	:=	$(OFILES:.o=.d)
 
+APP_TITLE         := $(shell echo "$(APP_TITLE)" | cut -c1-128)
+APP_DESCRIPTION   := $(shell echo "$(APP_DESCRIPTION)" | cut -c1-256)
+APP_AUTHOR        := $(shell echo "$(APP_AUTHOR)" | cut -c1-128)
+APP_PRODUCT_CODE  := $(shell echo $(APP_PRODUCT_CODE) | cut -c1-16)
+APP_UNIQUE_ID     := $(shell echo $(APP_UNIQUE_ID) | cut -c1-7)
+APP_VERSION_MAJOR := $(shell echo $(APP_VERSION_MAJOR) | cut -c1-3)
+APP_VERSION_MINOR := $(shell echo $(APP_VERSION_MINOR) | cut -c1-3)
+APP_VERSION_MICRO := $(shell echo $(APP_VERSION_MICRO) | cut -c1-3)
+
+ifneq ("$(wildcard $(TOPDIR)/$(BANNER_IMAGE).cgfx)","")
+	BANNER_IMAGE_FILE := $(TOPDIR)/$(BANNER_IMAGE).cgfx
+	BANNER_IMAGE_ARG  := -ci $(BANNER_IMAGE_FILE)
+else
+	BANNER_IMAGE_FILE := $(TOPDIR)/$(BANNER_IMAGE).png
+	BANNER_IMAGE_ARG  := -i $(BANNER_IMAGE_FILE)
+endif
+
+ifneq ("$(wildcard $(TOPDIR)/$(BANNER_AUDIO).cwav)","")
+	BANNER_AUDIO_FILE := $(TOPDIR)/$(BANNER_AUDIO).cwav
+	BANNER_AUDIO_ARG  := -ca $(BANNER_AUDIO_FILE)
+else
+	BANNER_AUDIO_FILE := $(TOPDIR)/$(BANNER_AUDIO).wav
+	BANNER_AUDIO_ARG  := -a $(BANNER_AUDIO_FILE)
+endif
+
+APP_ICON := $(TOPDIR)/$(ICON)
+
+COMMON_MAKEROM_PARAMS := -rsf $(RSF) -target t -exefslogo -elf $(OUTPUT).elf -icon icon.icn \
+-banner banner.bnr -DAPP_TITLE="$(APP_TITLE)" -DAPP_PRODUCT_CODE="$(APP_PRODUCT_CODE)" \
+-DAPP_UNIQUE_ID="$(APP_UNIQUE_ID)" -DAPP_SYSTEM_MODE="64MB" -DAPP_SYSTEM_MODE_EXT="Legacy" \
+-major "$(APP_VERSION_MAJOR)" -minor "$(APP_VERSION_MINOR)" -micro "$(APP_VERSION_MICRO)"
+
+ifneq ($(ROMFS),)
+	APP_ROMFS := $(TOPDIR)/$(ROMFS)
+	COMMON_MAKEROM_PARAMS += -DAPP_ROMFS="$(APP_ROMFS)"
+endif
+
+ifeq ($(OS),Windows_NT)
+	MAKEROM = makerom.exe
+	BANNERTOOL = bannertool.exe
+else
+	MAKEROM = $(TOOLDIR)/makerom
+	BANNERTOOL = $(TOOLDIR)/bannertool
+endif
+
+ifneq ($(MOD_FLAGS),)
+	CFLAGS	+=	$(MOD_FLAGS)
+endif
+
 #---------------------------------------------------------------------------------
 # main targets
 #---------------------------------------------------------------------------------
-ifeq ($(strip $(NO_SMDH)),)
-$(OUTPUT).3dsx	:	$(OUTPUT).elf $(OUTPUT).smdh
-else
-$(OUTPUT).3dsx	:	$(OUTPUT).elf
-endif
+all : $(OUTPUT).elf $(OUTPUT).smdh $(OUTPUT).3dsx $(OUTPUT).cia
+
 $(OUTPUT).elf	:	$(OFILES)
+
+$(OUTPUT).3dsx	:	$(OUTPUT).elf $(OUTPUT).smdh
+
+$(OUTPUT).cia	:	$(OUTPUT).elf banner.bnr icon.icn
+	@$(MAKEROM) -f cia -o $(OUTPUT).cia -DAPP_ENCRYPTED=false $(COMMON_MAKEROM_PARAMS)
+	@echo "built ... $(TARGET).cia"
+
+banner.bnr : $(BANNER_IMAGE_FILE) $(BANNER_AUDIO_FILE)
+	@$(BANNERTOOL) makebanner $(BANNER_IMAGE_ARG) $(BANNER_AUDIO_ARG) -o banner.bnr > /dev/null
+
+icon.icn : $(TOPDIR)/$(ICON)
+	@$(BANNERTOOL) makesmdh -s "$(APP_TITLE)" -l "$(APP_TITLE)" -p "$(APP_AUTHOR)" -i $(TOPDIR)/$(ICON) -o icon.icn > /dev/null
+
+cia : $(OUTPUT).cia
 
 #---------------------------------------------------------------------------------
 # you need a rule like this for each extension you use as binary data
