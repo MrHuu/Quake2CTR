@@ -279,5 +279,103 @@ else ifneq ($(GAME),)
 							game_xatrix/m_supertank.o \
 							game_xatrix/m_tank.o
 
+	else ifeq ($(GAME), DDAY)
+		APP_TITLE       := Quake 2: DDay - Normandy
+		APP_UNIQUE_ID   := 0xFF175
+		GAME_FOLDERS	:=	build/game_dday build/game_dday/ai build/game_dday/gbr build/game_dday/grm build/game_dday/ita build/game_dday/jpn build/game_dday/pol build/game_dday/rus build/game_dday/usa build/game_dday/usm
+		GAME_FILES 		=	game_dday/ai/ai_class_dmbot.o \
+							game_dday/ai/ai_class_monster_default.o \
+							game_dday/ai/ai_dropnodes.o \
+							game_dday/ai/ai_items.o \
+							game_dday/ai/ai_links.o \
+							game_dday/ai/ai_main.o \
+							game_dday/ai/ai_movement.o \
+							game_dday/ai/ai_navigation.o \
+							game_dday/ai/ai_nodes.o \
+							game_dday/ai/ai_tools.o \
+							game_dday/ai/ai_weapons.o \
+							game_dday/ai/AStar.o \
+							game_dday/ai/bot_common.o \
+							game_dday/ai/bot_spawn.o \
+							game_dday/gbr/gbr_guninfo.o \
+							game_dday/gbr/gbr_item.o \
+							game_dday/gbr/gbr_main.o \
+							game_dday/gbr/gbr_spawn.o \
+							game_dday/gbr/gbr_weapon.o \
+							game_dday/grm/grm_guninfo.o \
+							game_dday/grm/grm_item.o \
+							game_dday/grm/grm_main.o \
+							game_dday/grm/grm_spawn.o \
+							game_dday/grm/grm_weapon.o \
+							game_dday/ita/ita_guninfo.o \
+							game_dday/ita/ita_item.o \
+							game_dday/ita/ita_main.o \
+							game_dday/ita/ita_spawn.o \
+							game_dday/ita/ita_weapon.o \
+							game_dday/jpn/jpn_guninfo.o \
+							game_dday/jpn/jpn_item.o \
+							game_dday/jpn/jpn_main.o \
+							game_dday/jpn/jpn_spawn.o \
+							game_dday/jpn/jpn_weapon.o \
+							game_dday/pol/pol_guninfo.o \
+							game_dday/pol/pol_item.o \
+							game_dday/pol/pol_main.o \
+							game_dday/pol/pol_spawn.o \
+							game_dday/pol/pol_weapon.o \
+							game_dday/rus/rus_guninfo.o \
+							game_dday/rus/rus_item.o \
+							game_dday/rus/rus_main.o \
+							game_dday/rus/rus_spawn.o \
+							game_dday/rus/rus_weapon.o \
+							game_dday/usa/usa_guninfo.o \
+							game_dday/usa/usa_item.o \
+							game_dday/usa/usa_main.o \
+							game_dday/usa/usa_spawn.o \
+							game_dday/usa/usa_weapon.o \
+							game_dday/usm/usm_guninfo.o \
+							game_dday/usm/usm_item.o \
+							game_dday/usm/usm_main.o \
+							game_dday/usm/usm_spawn.o \
+							game_dday/usm/usm_weapon.o \
+							game_dday/p_classes.o \
+							game_dday/p_client.o \
+							game_dday/p_generic_wep.o \
+							game_dday/p_hud.o \
+							game_dday/p_menu.o \
+							game_dday/p_observer.o \
+							game_dday/p_trail.o \
+							game_dday/p_view.o \
+							game_dday/p_weapon.o \
+							game_dday/q_shared.o \
+							game_dday/u_entmgr.o \
+							game_dday/x_fbomb.o \
+							game_dday/x_fire.o \
+							game_dday/g_ai.o \
+							game_dday/g_arty.o \
+							game_dday/g_cmds.o \
+							game_dday/g_combat.o \
+							game_dday/g_ents.o \
+							game_dday/g_func.o \
+							game_dday/g_items.o \
+							game_dday/g_main.o \
+							game_dday/g_maps.o \
+							game_dday/g_misc.o \
+							game_dday/g_monster.o \
+							game_dday/g_objectives.o \
+							game_dday/g_phys.o \
+							game_dday/g_save.o \
+							game_dday/g_spawn.o \
+							game_dday/g_svcmds.o \
+							game_dday/g_target.o \
+							game_dday/g_trigger.o \
+							game_dday/g_turret.o \
+							game_dday/g_utils.o \
+							game_dday/g_weapon.o \
+							game_dday/m_actor.o \
+							game_dday/m_civilian.o \
+							game_dday/m_flash.o \
+							game_dday/m_insane.o \
+							game_dday/m_move.o
+
 	endif
 endif
